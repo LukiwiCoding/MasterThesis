@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="left: auto; right: auto; top: auto; bottom: auto; margin-left: 100px; margin-right: 100px; margin-top: 100px; margin-bottom: 125px; height: auto; width: auto; align-items: flex-start; justify-content: flex-start;">
+        <ui:Label text="Game Title" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; font-size: 49px; margin-bottom: 10px; padding-right: 0; padding-left: 0;" />
+        <ui:Button text="Start Game" display-tooltip-when-elided="true" name="Start" style="font-size: 35px; max-width: none; min-width: 210px; margin-bottom: 5px; margin-left: 0; margin-right: 0; margin-top: 0; padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 2px; min-height: 50px;" />
+        <ui:VisualElement style="margin-bottom: 5px; flex-direction: row;">
+            <ui:Button text="Find Server" display-tooltip-when-elided="true" name="FindServer" style="font-size: 35px; min-width: 210px; margin-bottom: 0; padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 2px; margin-left: 0; margin-right: 0; margin-top: 0; min-height: 50px;" />
+            <ui:TextField picking-mode="Ignore" label="IP-Address:" value="filler text" text="111.111.111.11" name="Address" style="font-size: 26px; -unity-text-align: middle-left; min-width: 400px;" />
+        </ui:VisualElement>
+        <ui:Button text="Options" display-tooltip-when-elided="true" name="Options" style="font-size: 35px; min-width: 210px; margin-bottom: 5px; margin-left: 0; margin-right: 0; margin-top: 0; padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 2px; min-height: 50px;" />
+        <ui:Button text="Exit Game" display-tooltip-when-elided="true" name="Exit" style="font-size: 35px; min-width: 210px; margin-bottom: 5px; margin-left: 0; margin-right: 0; margin-top: 0; padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 2px; min-height: 50px;" />
+    </ui:VisualElement>
+</ui:UXML>
