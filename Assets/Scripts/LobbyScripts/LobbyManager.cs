@@ -6,6 +6,7 @@ using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class LobbyManager : Singleton<LobbyManager>
@@ -25,7 +26,8 @@ public class LobbyManager : Singleton<LobbyManager>
         CreateLobbyOptions options = new()
         {
             IsPrivate = true,
-            Player = player
+            Player = player,
+            Password = "1234567890"
         };
 
         try
@@ -48,16 +50,17 @@ public class LobbyManager : Singleton<LobbyManager>
         Player player = new(AuthenticationService.Instance.PlayerId, null, SerializePlayerData(data));
         JoinLobbyByCodeOptions options = new()
         {
-            Password = "",
+            Password = "1234567890",
             Player = player
         };
-
+        print("Joining Lobby");
         try
         {
             lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode, options);
         }
-        catch(Exception) 
-        { 
+        catch(Exception e) 
+        {
+            Debug.LogError(e.Message);
             return false; 
         }
 

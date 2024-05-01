@@ -94,6 +94,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     private async void OnStartGame()
     {
         await GameLobbyManager.Instance.StartGame();
+        startGame.enabled = false;
     }
 
     private void OnEnable()
