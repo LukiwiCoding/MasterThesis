@@ -72,7 +72,7 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
         //if(readyPlayers == lobby.MaxPlayers) LobbyEvents.OnLobbyReady?.Invoke();
         if(readyPlayers > 0) LobbyEvents.OnLobbyReady?.Invoke();
 
-        if(LobbyManager.Instance.RelayServerCode != default && !inGame)
+        if(LobbyManager.Instance.RelayServerCode != default && inGame)
         {
             await JoinRelayServer(LobbyManager.Instance.RelayServerCode);
             SceneManager.LoadSceneAsync("Online");
