@@ -46,7 +46,6 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
         string connectionData = RelayManager.Instance.ConnectionData;
 
         await LobbyManager.Instance.UpdatePlayerData(localPlayerData.PlayerId, localPlayerData.SerializeLobbyPlayerData(), allocationId, connectionData);
-
         SceneManager.LoadSceneAsync("Online");
     }
 
@@ -72,8 +71,10 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
         //if(readyPlayers == lobby.MaxPlayers) LobbyEvents.OnLobbyReady?.Invoke();
         if(readyPlayers > 0) LobbyEvents.OnLobbyReady?.Invoke();
 
-        if(LobbyManager.Instance.RelayServerCode != default && inGame)
+        print($"Updated Lobby Data, RelayServerCode: {LobbyManager.Instance.RelayServerCode}, IsInGame: {inGame}\nJoin Condition: {LobbyManager.Instance.RelayServerCode != default && !inGame}");
+        if(LobbyManager.Instance.RelayServerCode != default && !inGame)
         {
+            print("Joining Relay");
             await JoinRelayServer(LobbyManager.Instance.RelayServerCode);
             SceneManager.LoadSceneAsync("Online");
         }
@@ -100,6 +101,7 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
         LobbyEvents.OnLobbyUpdated += OnLobbyUpdated;
     }
 
+   
     private void OnDisable()
     {
         LobbyEvents.OnLobbyUpdated -= OnLobbyUpdated;

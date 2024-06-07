@@ -1,0 +1,45 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.Netcode;
+using UnityEngine;
+
+public class ButtonRiddleDoorController : RiddleController
+{
+    [SerializeField] private float activTime = 1.5f;
+    [SerializeField] private Transform door;
+    [ServerRpc]
+    public override void InteractionServerRPC(int buttonID)
+    {
+        if (solved) return;
+
+        ButtonRiddleController button = interactables[buttonID] as ButtonRiddleController;
+        if (button.IsActive) return;
+
+        button.SetTimerServerRPC(activTime);
+        button.transform.position += button.ActivationDir;
+
+        if (CheckButtonStates())
+        {
+            door.position = Vector3.up * -2.8f;
+            solved = true;
+        }
+    }
+    protected override void InitializeInteractibles()
+    {
+        base.InitializeInteractibles();
+
+        for (int i = 0; i < interactables.Count; i++)
+        {
+            ((ButtonRiddleController)interactables[i]).ObjectID = i;
+        }
+    }
+    private bool CheckButtonStates()
+    {
+        for(int i = 0;i < interactables.Count;i++)
+        {
+            if (!((ButtonRiddleController)interactables[i]).IsActive) return false;
+        }
+
+        return true;
+    }
+}

@@ -2,11 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class LobbyManager : Singleton<LobbyManager>
@@ -97,14 +95,15 @@ public class LobbyManager : Singleton<LobbyManager>
 
     public string GetHostId() => lobby.HostId;
 
-    public async Task<bool> UpdatePlayerData(string id, Dictionary<string, string> data, string allocationId = default, string connectionData = default)
+    public async Task<bool> UpdatePlayerData(string id, Dictionary<string, string> data, string allocationId = default, string connectionData = default, string relayServerCode = default)
     {
+        data.Add("RelayServerCode", relayServerCode);
         Dictionary<string, PlayerDataObject> playerData = SerializePlayerData(data);
         UpdatePlayerOptions options = new()
         {
             Data = playerData,
             AllocationId = allocationId,
-            ConnectionInfo = connectionData
+            ConnectionInfo = connectionData,
         };
         try
         {
