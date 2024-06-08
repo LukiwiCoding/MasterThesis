@@ -9,7 +9,7 @@ public class TresorController : RiddleController
     [SerializeField] private List<TresorOutputComponent> outputs = new ();
     [SerializeField] private List<int> safeSolution = new (){ 1, 9, 7, 8 };
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public override void InteractionServerRPC(int ObjectID = default)
     {
         if (solved) return;

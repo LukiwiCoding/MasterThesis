@@ -12,7 +12,7 @@ public class ButtonRiddleController : InteractableObject
     public bool IsActive => isActive;
     public Vector3 ActivationDir => activationDir;
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void SetTimerServerRPC(float duration)
     {
         StartCoroutine(Timer(duration));

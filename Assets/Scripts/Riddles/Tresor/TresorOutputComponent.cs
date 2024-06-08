@@ -10,7 +10,7 @@ public class TresorOutputComponent : NetworkBehaviour
 
     private int currentDigit = 0;
     public int GetCurrentDigit { get { return currentDigit; } }
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void UpdateOutputFieldServerRPC(bool countUp)
     {
         if (int.TryParse(textfield.text, out int result))

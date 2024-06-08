@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8432425714492985352}
   - component: {fileID: 1829012019503826227}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6806576037723062130}
   - component: {fileID: 3956873699620094568}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 4669641890391600987}
   - component: {fileID: 6555113491032107862}
   - component: {fileID: 8647068122127863560}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ MonoBehaviour:
   GlobalObjectIdHash: 1504350805
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
+  ActiveSceneSynchronization: 1
   SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 6049111160992357767}
   - component: {fileID: 311049425013507101}
   - component: {fileID: 787657490378952965}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +462,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7339992413785462158}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CamRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}

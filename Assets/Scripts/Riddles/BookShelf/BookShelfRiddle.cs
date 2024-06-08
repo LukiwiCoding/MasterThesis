@@ -12,10 +12,10 @@ public class BookShelfRiddle : RiddleController
     [SerializeField] private bool[] currentSolution = { false, false, false, false, false };
     [SerializeField] private Transform door = null;
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public override void InteractionServerRPC(int bookId)
     {
-        if (solved) return; 
+        if (solved.Value) return; 
 
         BookShelfRiddleComponent book = interactables[bookId] as BookShelfRiddleComponent;
         if (book == null) return;
@@ -31,9 +31,15 @@ public class BookShelfRiddle : RiddleController
 
         if (SolutionIsValid()) 
         { 
-            door.position -= Vector3.up * 4;
-            print("solved");
+            solved.Value = true;
+            SolveRiddelClientRPC();
         }
+    }
+
+    [ClientRpc]
+    protected override void SolveRiddelClientRPC()
+    {
+        door.position -= Vector3.up * 4;
     }
 
     private bool SolutionIsValid()

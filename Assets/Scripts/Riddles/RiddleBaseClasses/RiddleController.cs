@@ -5,13 +5,14 @@ using UnityEngine;
 public abstract class RiddleController : NetworkBehaviour
 {
     protected List<IInteractable> interactables = new();
-    protected bool solved = false;
+    protected NetworkVariable<bool> solved = new(false);
     protected virtual void InitializeInteractibles() {
         GetInteractableComponentsRecursive(transform);       
     }
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public virtual void InteractionServerRPC(int objectId) { }
-
+    [ClientRpc]
+    protected virtual void SolveRiddelClientRPC() { }
     private void Awake()
     {
         InitializeInteractibles();

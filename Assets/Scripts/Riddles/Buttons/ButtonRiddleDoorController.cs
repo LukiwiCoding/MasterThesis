@@ -7,7 +7,7 @@ public class ButtonRiddleDoorController : RiddleController
 {
     [SerializeField] private float activTime = 1.5f;
     [SerializeField] private Transform door;
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public override void InteractionServerRPC(int buttonID)
     {
         if (solved) return;

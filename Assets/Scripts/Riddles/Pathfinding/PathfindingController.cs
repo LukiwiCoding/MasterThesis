@@ -6,7 +6,7 @@ using UnityEngine;
 public class PathfindingController : RiddleController
 {
     [SerializeField] private Collider resetTrigger;
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public override void InteractionServerRPC(int objectId)
     {
         if (solved) return;
@@ -18,13 +18,13 @@ public class PathfindingController : RiddleController
         if (!interactionComponent.IsWalkable) ResetPlayerToSpawnServerRPC();
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void ResetPlayerToSpawnServerRPC()
     {
         resetTrigger.GetComponent<ResetZoneTrigger>().GetPlayer().transform.position = resetTrigger.transform.position;
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void SetRiddleSolvedServerRPC() => solved = true;
 
 }
