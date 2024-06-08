@@ -9,7 +9,7 @@ public class PathfindingController : RiddleController
     [ServerRpc(RequireOwnership = false)]
     public override void InteractionServerRPC(int objectId)
     {
-        if (solved) return;
+        if (solved.Value) return;
         
         GridInteractionComponent interactionComponent = interactables[objectId] as GridInteractionComponent;
         
@@ -25,6 +25,6 @@ public class PathfindingController : RiddleController
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SetRiddleSolvedServerRPC() => solved = true;
+    public void SetRiddleSolvedServerRPC() => solved.Value = true;
 
 }

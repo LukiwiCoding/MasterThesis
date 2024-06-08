@@ -12,11 +12,11 @@ public class TresorController : RiddleController
     [ServerRpc(RequireOwnership = false)]
     public override void InteractionServerRPC(int ObjectID = default)
     {
-        if (solved) return;
+        if (solved.Value) return;
 
         if(CheckSafeCombination())
         {
-            print("solved");
+            solved.Value = true;
             transform.Rotate(Vector3.up * 95);
         }
     }

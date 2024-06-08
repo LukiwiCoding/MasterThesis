@@ -10,7 +10,7 @@ public class ButtonRiddleDoorController : RiddleController
     [ServerRpc(RequireOwnership = false)]
     public override void InteractionServerRPC(int buttonID)
     {
-        if (solved) return;
+        if (solved.Value) return;
 
         ButtonRiddleController button = interactables[buttonID] as ButtonRiddleController;
         if (button.IsActive) return;
@@ -21,7 +21,7 @@ public class ButtonRiddleDoorController : RiddleController
         if (CheckButtonStates())
         {
             door.position = Vector3.up * -2.8f;
-            solved = true;
+            solved.Value = true;
         }
     }
     protected override void InitializeInteractibles()
