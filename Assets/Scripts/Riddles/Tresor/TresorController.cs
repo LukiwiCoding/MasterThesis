@@ -17,10 +17,14 @@ public class TresorController : RiddleController
         if(CheckSafeCombination())
         {
             solved.Value = true;
-            transform.Rotate(Vector3.up * 95);
+            SolveRiddelClientRPC();
         }
     }
-
+    [ClientRpc]
+    protected override void SolveRiddelClientRPC()
+    {
+        transform.Rotate(Vector3.up * 95);
+    }
     private bool CheckSafeCombination()
     {
         for (int i = 0; i < outputs.Count; i++)

@@ -20,9 +20,13 @@ public class ButtonRiddleDoorController : RiddleController
 
         if (CheckButtonStates())
         {
-            door.position = Vector3.up * -2.8f;
             solved.Value = true;
         }
+    }
+    [ClientRpc]
+    protected override void SolveRiddelClientRPC()
+    {
+        door.position = Vector3.up * -4f;
     }
     protected override void InitializeInteractibles()
     {
