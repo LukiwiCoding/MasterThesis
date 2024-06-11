@@ -96,9 +96,8 @@ public class LobbyManager : Singleton<LobbyManager>
 
     public string GetHostId() => lobby.HostId;
 
-    public async Task<bool> UpdatePlayerData(string id, Dictionary<string, string> data, string allocationId = default, string connectionData = default, string relayServerCode = default)
+    public async Task<bool> UpdatePlayerData(string id, Dictionary<string, string> data, string allocationId = default, string connectionData = default)
     {
-        print(RelayServerCode);
         Dictionary<string, PlayerDataObject> playerData = SerializePlayerData(data);
         UpdatePlayerOptions options = new()
         {

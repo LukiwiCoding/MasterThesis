@@ -20,7 +20,6 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
         localPlayerData = new();
         localPlayerData.InitLobbyPlayerData(AuthenticationService.Instance.PlayerId, GetPlayerNameOS());
         lobbyData = new LobbyData();
-        lobbyData.Initialize("");
         return await LobbyManager.Instance.CreateLobby(localPlayerData.SerializeLobbyPlayerData(), lobbyData.Serialize());       
     }
 
@@ -69,6 +68,11 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
 
             lobbyPlayerDatas.Add(lobbyPlayerData);
         }
+
+        lobbyData = new();
+        lobbyData.Initialize(lobby.Data);
+        print(lobbyData.RelayServerCode);
+        if(lobbyData.RelayServerCode != default) LobbyManager.Instance.RelayServerCode = lobbyData.RelayServerCode;
 
         LobbyEvents.OnClientUpdated?.Invoke();
 
