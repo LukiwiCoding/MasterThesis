@@ -11,15 +11,17 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
 {
     private List<LobbyPlayerData> lobbyPlayerDatas = new();
     private LobbyPlayerData localPlayerData;
+    private LobbyData lobbyData;
     private bool inGame = false;
-    private Lobby lobby = null;
 
     public bool IsHost => localPlayerData.PlayerId == LobbyManager.Instance.GetHostId();
     public async Task<bool> CreateLobby()
     {
         localPlayerData = new();
         localPlayerData.InitLobbyPlayerData(AuthenticationService.Instance.PlayerId, GetPlayerNameOS());
-        return await LobbyManager.Instance.CreateLobby(localPlayerData.SerializeLobbyPlayerData());       
+        lobbyData = new LobbyData();
+        lobbyData.Initialize("");
+        return await LobbyManager.Instance.CreateLobby(localPlayerData.SerializeLobbyPlayerData(), lobbyData.Serialize());       
     }
 
     public async Task<bool> JoinLobby(string lobbyCode)
@@ -48,16 +50,13 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
         string connectionData = RelayManager.Instance.ConnectionData;
 
         await LobbyManager.Instance.UpdatePlayerData(localPlayerData.PlayerId, localPlayerData.SerializeLobbyPlayerData(), allocationId, connectionData);
-        LobbyEvents.OnLobbyUpdated(lobby, relayServerCode);
         SceneManager.LoadSceneAsync("Online");
     }
 
-    private async void OnLobbyUpdated(Lobby lobby, string relayCode = default)
+    private async void OnLobbyUpdated(Lobby lobby)
     {
         List<Dictionary<string, PlayerDataObject>> data = LobbyManager.Instance.GetPlayersData();
         lobbyPlayerDatas.Clear();
-
-        if (relayCode != default) LobbyManager.Instance.RelayServerCode = relayCode;
 
         int readyPlayers = 0;
         foreach(Dictionary<string, PlayerDataObject> playerData in data)
@@ -70,8 +69,6 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
 
             lobbyPlayerDatas.Add(lobbyPlayerData);
         }
-
-        this.lobby = lobby;
 
         LobbyEvents.OnClientUpdated?.Invoke();
 

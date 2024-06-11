@@ -3,7 +3,7 @@ using Unity.Services.Lobbies.Models;
 
 public static class LobbyEvents 
 {
-    public delegate void LobbyUpdated(Lobby lobby, string relayCode = default);
+    public delegate void LobbyUpdated(Lobby lobby);
     public static LobbyUpdated OnLobbyUpdated;
 
     public delegate void ClientUpdated();

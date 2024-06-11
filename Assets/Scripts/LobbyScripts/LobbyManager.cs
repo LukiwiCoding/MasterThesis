@@ -18,14 +18,15 @@ public class LobbyManager : Singleton<LobbyManager>
     {
         get => relayServerCode; set => relayServerCode = value;
     }
-    public async Task<bool> CreateLobby(Dictionary<string, string> data)
+    public async Task<bool> CreateLobby(Dictionary<string, string> data, Dictionary<string, string> lobbyData)
     {
         Player player = new (AuthenticationService.Instance.PlayerId, null, SerializePlayerData(data));
         CreateLobbyOptions options = new()
         {
             IsPrivate = true,
             Player = player,
-            Password = "1234567890"
+            Password = "1234567890", 
+            Data = SerializeLobbyData(lobbyData)
         };
 
         try
@@ -114,9 +115,28 @@ public class LobbyManager : Singleton<LobbyManager>
             return false;
         }
 
-        LobbyEvents.OnLobbyUpdated(lobby, relayServerCode);
+        LobbyEvents.OnLobbyUpdated(lobby);
         return true;
     }
+
+    public async Task<bool> UpdateLobbyData(Dictionary<string, string> data)
+    {
+        Dictionary<string, DataObject> lobbyData = SerializeLobbyData(data);
+        UpdateLobbyOptions options = new() { Data = lobbyData };
+
+        try
+        {
+            lobby = await LobbyService.Instance.UpdateLobbyAsync(lobby.Id, options);
+        }
+        catch
+        {
+            return false;
+        }
+
+        LobbyEvents.OnLobbyUpdated(lobby);
+        return true;
+    }
+
     private IEnumerator RefreshLobbyCoroutine(string lobbyId, float waitTimeSeconds)
     {
         while(true)
@@ -151,5 +171,18 @@ public class LobbyManager : Singleton<LobbyManager>
         }
 
         return playerData;
+    }
+
+    private Dictionary<string, DataObject> SerializeLobbyData(Dictionary<string, string> data)
+    {
+        Dictionary<string, DataObject> lobbyData = new();
+        foreach (var (key, value) in data)
+        {
+            lobbyData.Add(key, new DataObject(
+                visibility: DataObject.VisibilityOptions.Member,
+                value: value));
+        }
+
+        return lobbyData;
     }
 }
