@@ -47,9 +47,13 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
         LobbyManager.Instance.RelayServerCode = relayServerCode;
         string allocationId = RelayManager.Instance.AllocationId;
         string connectionData = RelayManager.Instance.ConnectionData;
+        LobbyData data = new();
+        data.Initialize(relayServerCode);
 
         await LobbyManager.Instance.UpdatePlayerData(localPlayerData.PlayerId, localPlayerData.SerializeLobbyPlayerData(), allocationId, connectionData);
-        SceneManager.LoadSceneAsync("Online");
+        await LobbyManager.Instance.UpdateLobbyData(data.Serialize());
+
+        SceneManager.LoadSceneAsync("Sandbox");
     }
 
     private async void OnLobbyUpdated(Lobby lobby)
