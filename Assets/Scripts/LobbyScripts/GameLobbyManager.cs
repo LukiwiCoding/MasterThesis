@@ -75,20 +75,18 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
 
         lobbyData = new();
         lobbyData.Initialize(lobby.Data);
-        print(lobbyData.RelayServerCode);
+
         if(lobbyData.RelayServerCode != default) LobbyManager.Instance.RelayServerCode = lobbyData.RelayServerCode;
 
         LobbyEvents.OnClientUpdated?.Invoke();
 
-        //if(readyPlayers == lobby.MaxPlayers) LobbyEvents.OnLobbyReady?.Invoke();
-        if(readyPlayers > 0) LobbyEvents.OnLobbyReady?.Invoke();
+        if(readyPlayers == lobby.MaxPlayers) LobbyEvents.OnLobbyReady?.Invoke();
+        //if(readyPlayers > 0) LobbyEvents.OnLobbyReady?.Invoke();
 
-        print($"Updated Lobby Data, RelayServerCode: {LobbyManager.Instance.RelayServerCode}, IsInGame: {inGame}\nJoin Condition: {LobbyManager.Instance.RelayServerCode != default && !inGame}");
         if(LobbyManager.Instance.RelayServerCode != default && !inGame)
         {
-            print("Joining Relay");
             await JoinRelayServer(LobbyManager.Instance.RelayServerCode);
-            SceneManager.LoadSceneAsync("Online");
+            SceneManager.LoadSceneAsync("Sandbox");
         }
     }
 
