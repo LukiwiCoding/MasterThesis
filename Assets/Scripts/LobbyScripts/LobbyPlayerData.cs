@@ -7,10 +7,13 @@ public class LobbyPlayerData
 {
     private string playerId;
     private string playerName;
+    private string relayCode;
     private bool isReady;
 
     public string PlayerId => playerId;
     public string PlayerName => playerName;
+
+    public string RelayCode => relayCode;
     public bool IsReady { 
         get => isReady; 
         set => isReady = value; 

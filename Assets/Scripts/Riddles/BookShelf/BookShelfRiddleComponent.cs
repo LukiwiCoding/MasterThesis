@@ -9,7 +9,7 @@ public class BookShelfRiddleComponent : InteractableObject
     {
         parent = transform.parent.GetComponent<BookShelfRiddle>();
     }
-    public override void Interact()
+    public override void Interact(ulong playerID = default)
     {
         parent.InteractionServerRPC(ObjectID);
     }

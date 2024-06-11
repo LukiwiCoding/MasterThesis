@@ -97,7 +97,6 @@ public class LobbyManager : Singleton<LobbyManager>
 
     public async Task<bool> UpdatePlayerData(string id, Dictionary<string, string> data, string allocationId = default, string connectionData = default, string relayServerCode = default)
     {
-        data.Add("RelayServerCode", relayServerCode);
         Dictionary<string, PlayerDataObject> playerData = SerializePlayerData(data);
         UpdatePlayerOptions options = new()
         {
@@ -114,7 +113,7 @@ public class LobbyManager : Singleton<LobbyManager>
             return false;
         }
 
-        LobbyEvents.OnLobbyUpdated(lobby);
+        LobbyEvents.OnLobbyUpdated(lobby, relayServerCode);
         return true;
     }
     private IEnumerator RefreshLobbyCoroutine(string lobbyId, float waitTimeSeconds)

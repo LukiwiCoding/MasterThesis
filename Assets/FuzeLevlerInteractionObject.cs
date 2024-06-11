@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class FuzeLevlerInteractionObject : InteractableObject
 {
-    public override void Interact()
+    [SerializeField] private FuzeController controller;
+    public override void Interact(ulong playerID)
     {
-        
+        controller.InteractionServerRPC((int)playerID);
     }
 }

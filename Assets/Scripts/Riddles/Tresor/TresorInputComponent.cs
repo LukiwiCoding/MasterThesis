@@ -8,7 +8,7 @@ public class TresorInputComponent : InteractableObject
     [SerializeField] private TresorOutputComponent output;
     [SerializeField] private TresorController controller;
 
-    public override void Interact()
+    public override void Interact(ulong playerID = default)
     {
         output.UpdateOutputFieldServerRPC(countUp);
         controller.InteractionServerRPC();

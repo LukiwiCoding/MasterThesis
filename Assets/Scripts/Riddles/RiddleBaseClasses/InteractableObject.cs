@@ -6,5 +6,5 @@ using UnityEngine;
 public abstract class InteractableObject : NetworkBehaviour, IInteractable
 {
     public int ObjectID;
-    public virtual void Interact() { }  
+    public virtual void Interact(ulong playerID = 100) { }  
 }

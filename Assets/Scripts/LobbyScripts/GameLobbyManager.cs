@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
 using UnityEngine.SceneManagement;
+using WebSocketSharp;
 
 public class GameLobbyManager : Singleton<GameLobbyManager>
 {
@@ -49,10 +50,12 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
         SceneManager.LoadSceneAsync("Online");
     }
 
-    private async void OnLobbyUpdated(Lobby lobby)
+    private async void OnLobbyUpdated(Lobby lobby, string relayCode = default)
     {
         List<Dictionary<string, PlayerDataObject>> data = LobbyManager.Instance.GetPlayersData();
         lobbyPlayerDatas.Clear();
+
+        if (relayCode != default) LobbyManager.Instance.RelayServerCode = relayCode;
 
         int readyPlayers = 0;
         foreach(Dictionary<string, PlayerDataObject> playerData in data)

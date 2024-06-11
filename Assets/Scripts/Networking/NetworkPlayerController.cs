@@ -20,13 +20,18 @@ public class PlayerNetwork : NetworkBehaviour
     private CinemachineVirtualCamera virtualCamera;
     private PlayerInputAction playerInput;
     private float cameraAngle;
-
+    private ulong clientID;
     public override void OnNetworkSpawn()
     {
         virtualCamera = cameraTransform.gameObject.GetComponent<CinemachineVirtualCamera>();
         if (IsOwner) virtualCamera.Priority = 1;
-        else virtualCamera.Priority = 0;
+        else 
+        { 
+            virtualCamera.Priority = 0; 
+            GetComponent<AudioListener>().enabled = false;
+        }
         transform.position = new(-71.4f, 7.5f, 18.28f);
+        clientID = GetComponent<NetworkObject>().OwnerClientId;
     }
 
     private void Start()
@@ -58,7 +63,7 @@ public class PlayerNetwork : NetworkBehaviour
         {
             Debug.DrawRay(cameraTransform.position, cameraTransform.forward * interactionDistance, Color.red);
             IInteractable interactable = (IInteractable)hitInfo.collider.gameObject.GetComponent(typeof(InteractableObject));       
-            interactable?.Interact();
+            interactable?.Interact(clientID);
         }
     }
     private void LookAround(Vector2 input)

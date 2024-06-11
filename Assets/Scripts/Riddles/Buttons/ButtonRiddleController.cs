@@ -35,7 +35,7 @@ public class ButtonRiddleController : InteractableObject
         isActive = false;
         transform.position -= activationDir;
     }
-    public override void Interact()
+    public override void Interact(ulong playerID = default)
     {
         print("interaction!!");
         door.InteractionServerRPC(ObjectID);
