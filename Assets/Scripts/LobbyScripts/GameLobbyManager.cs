@@ -46,7 +46,7 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
         string allocationId = RelayManager.Instance.AllocationId;
         string connectionData = RelayManager.Instance.ConnectionData;
 
-        await LobbyManager.Instance.UpdatePlayerData(localPlayerData.PlayerId, localPlayerData.SerializeLobbyPlayerData(), allocationId, connectionData);
+        await LobbyManager.Instance.UpdatePlayerData(localPlayerData.PlayerId, localPlayerData.SerializeLobbyPlayerData(), allocationId, connectionData, relayServerCode);
         SceneManager.LoadSceneAsync("Online");
     }
 
