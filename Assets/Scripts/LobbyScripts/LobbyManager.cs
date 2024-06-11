@@ -97,6 +97,7 @@ public class LobbyManager : Singleton<LobbyManager>
 
     public async Task<bool> UpdatePlayerData(string id, Dictionary<string, string> data, string allocationId = default, string connectionData = default, string relayServerCode = default)
     {
+        print(RelayServerCode);
         Dictionary<string, PlayerDataObject> playerData = SerializePlayerData(data);
         UpdatePlayerOptions options = new()
         {

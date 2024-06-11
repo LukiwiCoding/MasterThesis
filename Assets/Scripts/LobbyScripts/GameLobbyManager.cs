@@ -12,6 +12,7 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
     private List<LobbyPlayerData> lobbyPlayerDatas = new();
     private LobbyPlayerData localPlayerData;
     private bool inGame = false;
+    private Lobby lobby = null;
 
     public bool IsHost => localPlayerData.PlayerId == LobbyManager.Instance.GetHostId();
     public async Task<bool> CreateLobby()
@@ -46,7 +47,8 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
         string allocationId = RelayManager.Instance.AllocationId;
         string connectionData = RelayManager.Instance.ConnectionData;
 
-        await LobbyManager.Instance.UpdatePlayerData(localPlayerData.PlayerId, localPlayerData.SerializeLobbyPlayerData(), allocationId, connectionData, relayServerCode);
+        await LobbyManager.Instance.UpdatePlayerData(localPlayerData.PlayerId, localPlayerData.SerializeLobbyPlayerData(), allocationId, connectionData);
+        LobbyEvents.OnLobbyUpdated(lobby, relayServerCode);
         SceneManager.LoadSceneAsync("Online");
     }
 
@@ -68,6 +70,8 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
 
             lobbyPlayerDatas.Add(lobbyPlayerData);
         }
+
+        this.lobby = lobby;
 
         LobbyEvents.OnClientUpdated?.Invoke();
 
