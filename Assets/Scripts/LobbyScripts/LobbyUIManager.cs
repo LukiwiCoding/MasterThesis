@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LobbyUIManager : Singleton<LobbyUIManager>
@@ -26,7 +27,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     private void Awake()
     {
         List<RectTransform> playerRectTransforms = new();
-        foreach(RectTransform t in playerContainer.transform)
+        foreach (RectTransform t in playerContainer.transform)
         {
             playerRectTransforms.Add(t);
         }
@@ -45,9 +46,9 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     public void UpdatePlayerUI(List<LobbyPlayer> playerData)
     {
         bool startGame = true;
-        for(int i =  0; i < playerData.Count; i++)
+        for (int i = 0; i < playerData.Count; i++)
         {
-            
+
             playerLobbyUIs[i].PlayerName.text = playerData[i].PlayerName != null ? playerData[i].PlayerName : "";
             playerLobbyUIs[i].IsReadyState.text = ConvertPlayerStateToString(playerData[i].IsReady);
 
@@ -55,10 +56,10 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
             {
                 startGame &= playerData[i].IsReady;
             }
-            else 
-            { 
-                startGame = false; 
-            }  
+            else
+            {
+                startGame = false;
+            }
         }
 
         this.startGame.enabled = startGame;
@@ -73,10 +74,10 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
         return readyState;
     }
-    
+
     private void UpdatePlayerReadyState()
     {
-        foreach(PlayerLobbyUI pui in playerLobbyUIs)
+        foreach (PlayerLobbyUI pui in playerLobbyUIs)
         {
             pui.IsReadyState.color = pui.IsReadyState.text.Equals("Ready") ? GREEN : RED;
         }
@@ -87,7 +88,14 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         await GameLobbyManager.Instance.TogglePlayerReadyState();
     }
 
-    private void OnLeave() => LobbyManager.Instance.DeleteLobby();
+    private void OnLeave()
+    {
+        if(GameLobbyManager.Instance.IsHost) 
+        {
+            LobbyManager.Instance.DeleteLobby();
+        }
+        SceneManager.LoadSceneAsync("Offline");
+    }
 
     private void LobbyReady() => startGame.enabled = true;
 

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using WebSocketSharp;
 
@@ -18,7 +19,7 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
     public async Task<bool> CreateLobby()
     {
         localPlayerData = new();
-        localPlayerData.InitLobbyPlayerData(AuthenticationService.Instance.PlayerId, GetPlayerNameOS());
+        localPlayerData.InitLobbyPlayerData(AuthenticationService.Instance.PlayerId, PlayerPrefs.GetString("PlayerName"));
         lobbyData = new LobbyData();
         return await LobbyManager.Instance.CreateLobby(localPlayerData.SerializeLobbyPlayerData(), lobbyData.Serialize());       
     }
@@ -26,7 +27,7 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
     public async Task<bool> JoinLobby(string lobbyCode)
     {
         localPlayerData = new();
-        localPlayerData.InitLobbyPlayerData(AuthenticationService.Instance.PlayerId, GetPlayerNameOS());
+        localPlayerData.InitLobbyPlayerData(AuthenticationService.Instance.PlayerId, PlayerPrefs.GetString("PlayerName"));
         return await LobbyManager.Instance.JoinLobby(lobbyCode, localPlayerData.SerializeLobbyPlayerData());
     }
 
@@ -101,10 +102,10 @@ public class GameLobbyManager : Singleton<GameLobbyManager>
         await LobbyManager.Instance.UpdatePlayerData(localPlayerData.PlayerId, localPlayerData.SerializeLobbyPlayerData(), allocationId, connectionData);
         return true;
     }
-    private string GetPlayerNameOS()
-    {
-        return Environment.UserName;
-    }
+    //private string GetPlayerNameOS()
+    //{
+    //    return Environment.UserName;
+    //}
 
     private void OnEnable()
     {

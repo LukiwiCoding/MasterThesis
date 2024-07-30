@@ -17721,8 +17721,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -22016,8 +22016,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -29447,6 +29447,7 @@ MonoBehaviour:
   host: {fileID: 863251231}
   openjoinmenu: {fileID: 1065916825}
   quit: {fileID: 1530947935}
+  playerName: {fileID: 1451192101}
   joinmenu: {fileID: 1749681338}
   join: {fileID: 1272808891}
   back: {fileID: 525989559}

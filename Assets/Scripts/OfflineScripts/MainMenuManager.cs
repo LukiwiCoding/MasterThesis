@@ -12,6 +12,7 @@ public class MainMenuManager : Singleton<MainMenuManager>
     [SerializeField] private Button host;
     [SerializeField] private Button openjoinmenu;
     [SerializeField] private Button quit;
+    [SerializeField] private TMP_InputField playerName;
 
     [Header("JoinMenuComponents")]
     [SerializeField] private GameObject joinmenu;
@@ -21,6 +22,12 @@ public class MainMenuManager : Singleton<MainMenuManager>
 
     private void OnEnable()
     {
+        if (PlayerPrefs.GetString("PlayerName").IsNullOrEmpty())
+        {
+            PlayerPrefs.SetString("PlayerName", Environment.UserName);
+        }
+        playerName.text = PlayerPrefs.GetString("PlayerName");
+
         host.onClick.AddListener(async() => {
             if(await GameLobbyManager.Instance.CreateLobby())
             {
@@ -55,6 +62,18 @@ public class MainMenuManager : Singleton<MainMenuManager>
         {
             join.enabled = !val.IsNullOrEmpty();
         });
+
+        playerName.onValueChanged.AddListener((val) =>
+        {
+            if(val.IsNullOrEmpty())
+            {
+                PlayerPrefs.SetString("PlayerName", Environment.UserName);
+            }
+            else
+            {
+                PlayerPrefs.SetString("PlayerName", val.ToString());
+            }
+        });
     }
 
     private void OnDisable()
@@ -65,6 +84,7 @@ public class MainMenuManager : Singleton<MainMenuManager>
         join.onClick.RemoveAllListeners();
         back.onClick.RemoveAllListeners();
         lobbyCodeInput.onValueChanged.RemoveAllListeners();
+        playerName.onValueChanged.RemoveAllListeners();
     }
 
     private void Awake()
